@@ -43,5 +43,21 @@ public class Ex03Casting {
 //        long l5 = (long)(1_000_000_000_000); // casting does NOT help with this issue because the number itself is too big for the default int type
         long l5 = 1_000_000_000_000L; // the L is needed to be able to read the number as a long instead of an int
 
+        /*
+        Casting with object can also be done to downcast or upcast:
+        downcasting -> change type to child type
+        upcasting -> change type to part type
+
+        Person -> Student -> FT11Student
+        FT11Student f11Student = new FT11Student();
+
+        upcasting:
+            Person p = f11Student;
+
+        downcasting:
+         Person person = new FT11Student();
+         Student student = (Student)person;
+         FT11Student student11 = (FT11Student)person;
+         */
     }
 }

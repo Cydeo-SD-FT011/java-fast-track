@@ -12,3 +12,10 @@ public class Ex01File {
 
     There can be other classes defined in this file, but they cannot be public
  */
+
+/*
+Another class cannot be public
+ */
+class Another {
+
+}

@@ -1,6 +1,13 @@
 package day01;
 
+/*
+In java, we have instance, static, local variables
+There is no global variables.
+Closest we can achieve is public static variables
+ */
+
 public class Ex04Variables {
+    public static String url = "www.cydeo.com";
 
     int z = 3; //instance/object variable
 
@@ -25,6 +32,8 @@ public class Ex04Variables {
 
         Ex04Variables obj = new Ex04Variables();
         System.out.println(obj.z);
+
+        System.out.println("URL: " + Ex04Variables.url);
     }
 
 }

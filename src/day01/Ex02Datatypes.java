@@ -4,6 +4,17 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Scanner;
 
+/*
+Dynamic Typed programming language -> JavaScript, Python...
+    Ex: value = "hello";
+        value = 543;
+
+JavaScript -> TypeScript
+
+Static Typed programming language -> Java, C, C# etc -> We need to predefine the variable type before using it.
+then we can only use for that declared type.
+ */
+
 public class Ex02Datatypes {
     public static void main(String[] args) {
 
@@ -49,5 +60,6 @@ public class Ex02Datatypes {
         // float i7 = 123.4; // 123.4 is a double type by default. double is bigger than float so a double type cannot be stored into a float variable automatically
         float i8 = 123.4F; // adding the F to 123.4 makes it a float type, so it can be assigned to a float variable
 
+        System.out.println(2334534534543L);
     }
 }
