@@ -50,6 +50,4 @@ public class Task3DuplicateElement {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(findDup(1, 3, 5, 1, 9, 5, 9, 6, 4)));
     }
-
-
 }

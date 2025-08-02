@@ -5,7 +5,11 @@ public class Ex08ForEachLoop {
 
         int[] arr = {4, 5, 12, 6};
 
-        for(int i = 0; i < args.length; i++) {
+        for(int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+
+        for (int i = arr.length - 1; i >= 0; i--) {
             System.out.println(arr[i]);
         }
 

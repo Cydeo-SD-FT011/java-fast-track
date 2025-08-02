@@ -2,7 +2,7 @@ package day02;
 
 public class Ex11Recursion {
     public static void main(String[] args) {
-        int a = fibonacci(8);
+        int a = fibonacci(50);
         System.out.println(a);
     }
 
