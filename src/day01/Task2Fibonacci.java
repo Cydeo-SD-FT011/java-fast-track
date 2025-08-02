@@ -29,7 +29,7 @@ public class Task2Fibonacci {
 
     public static void main(String[] args) {
 
-        int n = 5;
+        int n = 15;
 
         int first = 0;
         int second = 1;

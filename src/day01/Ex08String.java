@@ -24,7 +24,7 @@ public class Ex08String {
         System.out.println(s2);
 
         System.out.println("------------------------------------------------------");
-
+        //Strings are immutable, we cannot change object after creation
         String str = "Water";
         str += " Fountain"; // creates a new String with the new String concatenated at the end. That new String is then reassigned back to the original reference
         System.out.println(str);

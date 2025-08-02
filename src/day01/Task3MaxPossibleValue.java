@@ -5,7 +5,8 @@ public class Task3MaxPossibleValue {
     /*
         Maximum Possible Value
 
-        Create a program that will print the maximum possible value of the given number N by inserting the digit '5' somewhere in the integer.
+        Create a program that will print the maximum possible value of the given number N by inserting the digit '5'
+        somewhere in the integer.
 
         > bounds of N: -8,000 - 8,000
 
