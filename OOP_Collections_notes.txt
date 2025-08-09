@@ -1,0 +1,1374 @@
+OOP -> Object oriented programming principles
+
+- Encapsulation
+- Inheritance
+- Abstraction
+- Polymorphism
+
+Encapsulation - data hiding by making variables private and adding public getter and setter methods.
+=================================
+
+Class -> data/variables
+	  -> behaviour/methods
+
+public class Student {
+	private String id; //hidden from outside
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		//pre-condition
+		if (id.length() < 6) {
+			System.out.println("id must be at least 6 characters");
+		} else {
+			this.id = id;
+		}
+	}
+
+}
+
+Another{
+	Student st = new Student();
+	//st.id = "abc123"; -> ERROR
+	st.setId("abc123");
+	println(st.getId());
+}
+
+
+
+
+
+Inheritance
+Method Overriding
+final
+__________________________________________________________________
+
+Inheritance
+	- is when a child class inherits methods and variables from a parent class.
+    allows a class to share/pass information between different classes
+        + provides code re-usability and maintainability
+        + good way to organize/group classes that are related
+
+How to inherit in java?
+    the extends keyword allows inheritance
+
+terminology to describe inheritance relationship between classes:
+    is - a
+    Child is a Parent
+
+    names to describe the different classes:
+        parent, super, or base class: passes the information
+
+        child, sub, or derived: gets the information
+
+  Mac extends Computer
+
+Object class
+    The Object class is the parent of all classes
+        - doesn't need to be defined, it is automatically inherited
+            where toString method is defined
+
+================================
+public class MyClass {
+	private int num;
+
+	public MyClass(int num) {
+		this.num = num;
+	}
+
+	public int getNum() {
+		return num;
+	}
+}
+
+MyClass my1 = new MyClass(10);
+my1.getNum() => 10
+
+MyClass my2 = new MyClass(15);
+-------
+So above class is read-only immutable class.
+We can only set value once then we cannot change it.
+
+my1 = new MyClass(15);
+my1.getNum() => 15
+================================
+Constructors in Inheritance
+    constructor is not inherited, but the child class constructor must always call the parent class constructor
+        -> using super() the parent constructor is called
+
+        -> the default constructor always called super() in the first line
+
+1)
+	public class A {
+		public A() {
+            System.out.println("A constructor");
+		}
+	}
+
+	public class B extends A {
+		public B() {
+		    super();
+		    System.out.println("B constructor");
+		}
+
+	}
+
+A a = new A(); => "A constructor"
+
+B b = new B(); => "A constructor"
+               => "B constructor"
+
+B b2 = new B(); => "A constructor"
+                => "B constructor"
+2)
+	public class A {
+		private String name;
+
+		public A(String name) {
+			this.name = name;
+		}
+	}
+
+	public class B extends A {
+		//ERROR, so we need to add super(name)
+		public B(String name)	{
+			super(name);
+		}
+	}
+
+3)
+	public class A {
+		private String name;
+
+		public A(String name) {
+			this.name = name;
+		}
+
+		public A() {
+
+		}
+	}
+
+	//NO ERROR BELOW, because parent has no-args constructor
+	public class B extends A {
+		public B() {
+			super();
+		}
+
+	}
+
+
+
+
+Method Overriding
+
+	change the implementation(code) of a method that is inherited from a super class
+		-> another way to phrase it: after inheriting a method we can change how it works
+
+	use of overriding: create method implementation that is more specific for the sub class
+
+	@Override
+		annotation that helps make sure you override the method correctly
+		using the annotation is optional, but recommended to use
+
+Method Overriding rules
+
+	method needs to be inherited
+	method signature should be the same
+		method signature: name + parameters
+	access modifier should be the same or more visible
+
+	return type should be same
+		*** or covariant: sub class of that return type (we can talk about later)
+__________________________________________________________________
+
+Inheritance questions
+
+IQ: Can you have more than one direct parent?
+    NO, java does not allow multi-inheritance ( multiple parents at the same time )
+
+IQ: What is the difference between this and super
+
+    this: reference to the instance of the current class
+        -> used to differentiate local variables and instance variables
+        -> used to access the instance members of the current class
+
+    super: reference to the instance of the parent class
+        -> used to access the instance members in the parent class
+
+IQ: What is the difference between this() and super()
+
+    this(): call a constructor in the same class
+        -> Based on the argument given you could call any constructor
+
+    super(): call the constructor from the parent class
+        -> default constructor always uses super() on the first line
+            -> In order to make an object of the child class we have to call the parent class constructor
+
+IQ: What is the difference between method overloading and overriding
+
+    overloading: have a method with the same name, different parameters
+        -> happens in the same class
+
+    overriding: changing the implementation of a method that came from the super class
+        -> happens between the super and sub class
+        -> Methods with same name and same parameters
+
+	high level:
+		these concepts allows methods to dynamically be used throughout our projects. Method overloading helps to create multiple methods that share a similar name making it easier to group similar related functionality but also gives the benefit of different ways to call those methods based on the different parameters we define. Method overriding allows us to take an functionality that was inherited and change that implementation to better suit the sub classes. In this case we are not create more methods, but instead we are able to just change how those same methods worked in specific sub classes
+
+IQ: How can you override static methods?
+	static methods cannot be overridden, it is possible to declare a method with the same name in the sub class, but this is called method hiding, not overriding.
+
+	------------------------------------------------------------------------
+
+access modifiers with inheritance
+
+	private: cannot be inherited
+
+	default: can only be inherited within the same package
+
+	protected: can be inherited to the subclass in any package
+
+	public: can be inherited anywhere in the project
+
+__________________________________________________________________
+
+Types of inheritance
+
+	Single inheritance: one class to another class
+		class Planet{}
+		class Mars extends Planet{}
+
+	Multi level: one class is the direct parent of one class and acts like the grandparent of another
+		class Animal {}
+		class Dog extends Animal{}
+		class Husky extends Dog {}
+
+	Hierarchical: one class is the direct parent of many sub classes. Those sub classes being like siblings
+		class Book {}
+		class AudioBook extends Book {}
+		class EBook extends Book {}
+		class TextBook extends Book{}
+
+__________________________________________________________________
+
+final
+
+	final variable: a constant variable. value cannot be reassigned or changed
+
+		Ex: final int a = 5;
+			a = 10; -> this line will not compile because the variable cannot be changed
+
+		- constants: public static final variables
+			information/data that are fixed and accessible everywhere
+
+			Ex: Math.PI
+				Integer.MAX_VALUE
+
+			- convention for creating constant variables: constant variables are created in all uppercase and underscore for spaces
+
+	final method: method that cannot be overridden -> cannot change the implementation of the method
+
+		syntax: public final void method(){}
+
+		Q: can you overload final methods
+			yes
+
+	final class: the class cannot be the parent of another class.
+
+		syntax: public final class name {}
+
+		Q: can a final class be a sub class
+			yes
+
+__________________________________________________________________
+
+we write:
+
+	public class Animal {
+
+	}
+
+what is actually there:
+
+	import java.lang.*;
+
+	public class Animal extends Object {
+		public Animal(){
+			super();
+		}
+	}
+
+__________________________________________________________________
+
+final
+
+	final variable: a fixed variable. value cannot be reassigned or changed
+
+		Ex: final int a = 5;
+			a = 10; -> this line will not compile because the variable cannot be changed
+
+		- constants: public static final variables
+			information/data that are fixed and accessible everywhere
+
+			Ex: Math.PI
+				Integer.MAX_VALUE
+
+			- convention for creating constant variables: constant variables are created in all uppercase and underscore for spaces
+
+	final method: method that cannot be overridden -> cannot change the implementation of the method
+
+		syntax: public final void method(){}
+
+		Q: can you overload final methods
+			yes
+
+	final class: the class cannot be the parent of another class.
+
+		syntax: public final class name {}
+
+		Q: can a final class be a sub class
+			yes
+__________________________________________________________________
+
+Abstraction
+
+	concept for hiding implementation. Allow us to focus on WHAT the functionality is (action/method), but not worry about HOW its done (implementation)
+
+	abstraction does not work without inheritance
+
+	implementation: the function of the code, how the code achieves the result
+
+in java there is two ways to achieve abstraction with abstract methods:
+	abstract class
+	interface
+
+	abstract methods
+
+		a method without any implementation (a method with no code body)
+			ex:
+			public abstract void rotate();
+
+		-> these methods must be overridden in the sub classes at some point
+
+	concrete class: first non-abstract class (normal class). This class must implement all abstract that are inherited
+
+	IQ: Why would you use Interface over Abstract class?
+
+	-Interface supports Multiple Inheritance -> A class can implement multiple interfaces at same time.
+	-But with Abstract class -> A class can only extend single Abstract class. it does not support multiple inheritance.
+
+__________________________________________________________________
+
+Abstract Class
+
+	a class that is defined with the abstract keyword
+
+		ex: public abstract class Planet {}
+		Planet p = new Planet(); -> ERROR- cannot create object of abstract class
+
+	-> an abstract class is able to define abstract methods
+	-> this class cannot instantiated (cannot create objects from this class)
+
+	everything else about the classes is the same
+
+	public abstract class Planet {
+		String name;
+		public Planet(String name) {
+			this.name = name;
+		}
+		public abstract void rotate();
+		public void sunshine() {
+			System.out.println("Sun is shining..");
+		}
+	}
+
+Q: Can you make non abstracts methods in an abstract class
+	yes, you can make instance methods or static methods
+
+Q: Can you have an abstract class without any abstract methods
+	yes, you are allowed to create abstract methods, but it doesn't require you to make any
+Q: Can you create an object from Abstract class?
+    no, we cannot
+
+Difference between normal class & abstract class
+
+	both: instance & static methods, variables, constructors
+
+	abstract class:
+		cannot make objects of the class
+		can make abstract method
+		cannot be final
+
+	normal class:
+		create objects of the class
+		cannot create abstract methods
+		can be final
+__________________________________________________________________
+
+Interface
+
+	interface is NOT a class. An interface is a blueprint for a class
+		- Cannot be instantiated
+
+	Allows creation of abstract method
+		any method declared is public abstract automatically
+
+	implementing an interface creates an is a relation
+		implements keyword is used to inherit the abstract methods from the interface
+
+	everything uses public access modifier automatically
+
+	variables: any variable declared is public static final automatically (constant variable)
+		-> interface do not have any instance variables
+
+What does an interface have
+	constant variables, abstract methods, static methods, default methods, private methods
+
+What does an interface NOT have
+	instance variables, instance methods, constructor, blocks of code (static block)
+
+Q: Can we have any non-abstract methods in interface?
+Q: Can we have any methods with implementation/code block in interface?
+	-> these two questions ask about the same concept
+
+	static and default methods allow creation of methods that have implementation
+
+	static: a method with code body and it is accessed by the interface name
+		-> these methods are not inherited
+
+	default: a method with a code body and it is accessed by the object of the class that is implementing the interface
+
+		instance level for the class that implements
+
+		-> this is not the default access modifier. It is a keyword for these methods. Default methods are only created in interface
+
+Inheritance with interface
+
+	interface is not a class, which means it doesn't follow all the same rules
+
+		-> classes can only have one parent, but interface doesn't need follow that
+
+		- a class can implement as many interfaces as needed
+		- an interface can inherit as many interfaces as needed
+
+How to use the interfaces
+
+	class --> class: extends
+	interface --> class: implements
+	interface --> interface: extends
+__________________________________________________________________
+
+Abstract class vs Interface
+
+	both:
+		used for abstraction in java
+		cannot create objects
+		can create abstract methods
+		can create static methods
+		create an is a relation
+		can be inherited
+
+	abstract class:
+		can have constructors
+		can have instance variables
+		can have instance methods
+		can have blocks of code: static block
+		can use any access modifier
+		can only have one parent
+		static variables that are not final
+
+	interface:
+		public is the access modifier used by default
+		methods created are abstract by default
+		variables created are public static final (constant)
+		multiple interface can be implemented to a class - or - inherited to another interface
+		static methods are not inherited
+		can create default methods
+
+	putting it all together:
+
+		both are useful to achieve abstraction, but interface is the preferred way because of the ability to implement many interfaces(Multiple inheritance).
+
+		Abstract class works like a normal class for the most part, so it still follows the inheritance rules of only having one parent.
+
+		Interfaces do not need to follow the rule of multiple inheritance because they are not a class and have their own properties.
+
+		Methods created in an interface are abstract by default, but there is two other options to create non-abstract methods which are the static and default methods
+
+__________________________________________________________________
+
+
+OOP Polymorphism
+
+Exception Handling
+
+__________________________________________________________________
+
+Polymorphism
+Reference casting
+Exceptions
+try catch
+finally
+__________________________________________________________________
+
+Polymorphism
+
+	objects are able to take different forms through their references.
+
+	Reference can be parent class or interface and object is child type.
+
+  public class Maria extends Person implements Student,Sibling,Friend,Mom{}
+
+  Maria is Maria
+  Maria maria = new Maria();
+
+  Maria is Student
+  Student maria = new Maria();
+
+  Maria is Sibling
+  Sibling maria = new Maria();
+
+  Maria is Friend
+  Friend maria = new Maria();
+
+  Person maria = new Maria();
+
+  Maria is Mom
+  Maria is Customer
+  Maria is Employee
+
+Object -> Machine -> Vehicle  -> Bus
+                              -> Car
+Bus b = new Bus();
+Vehicle b = new Bus();
+Machine b2 = new Bus();
+Object ob = new Car();
+
+What are the possible references of an object
+
+		public interface Driveable{}
+		public class Street implements Driveable{}
+
+	itself: the reference is the same type as the object
+		Street obj = new Street();
+
+	any super class: any direct or indirect super class can be a reference
+		Driveable obj = new Street();
+		Object obj = new Street();
+
+	any implemented interface
+		Driveable obj = new Street();
+			- this is a Street object, but with a reference of the Driveable interface
+
+	is a relation helps us understand which references an object can have
+
+class Book {
+	learn()
+}
+
+interface Listenable {
+	listenOnDevice();
+}
+
+AudioBook extends Book implements Listenable {
+	learn();
+	listenOnDevice();
+	pause();
+}
+
+Without:
+1) AudioBook ab = new AudioBook(); Ref and Obj type are same
+polymorphism:
+2) Book ab       = new AudioBook(); Ref is Parent class
+3) Listenable ab = new AudioBook(); Ref is Parent interface
+4) Object ab     = new AudioBook(); Ref is Parent class
+
+Examples:
+	ArrayList<Integer> nums = new ArrayList<>();
+	List<Integer> nums = new ArrayList<>();
+
+	WebDriver driver = new ChromeDriver();
+=================================
+Reference type decides what methods are accessible,
+We can only call methods from reference.
+
+class Book {
+	learn()
+}
+
+interface Listenable {
+	listenOnDevice();
+}
+
+AudioBook extends Book implements Listenable {
+	learn();
+	listenOnDevice();
+	pause();
+}
+
+AudioBook audio = new AudioBook();
+audio.learn(); audio.listenOnDevice(); audio.pause();
+
+Book auBook = new AudioBook();
+auBook.learn();
+-> auBook.listenOnDevice(); not accessible
+
+Listenable ls = new AudioBook();
+ls.listenOnDevice();
+//ls.pause(), ls.learn(); not accessible
+
+downcast:
+((AudioBook)ls).pause();
+===================================
+Color
+Red extends Color
+Blue extends Color
+Black extends Color
+Yellow extends Color
+
+Red red = new Red();
+
+-> Declare Variable so that I can assign any color object.
+
+Color color;
+color = new Red();
+color = new Blue();
+color = new Black();
+color = new Yellow();
+
+public void paint(Color color) {
+	color.paint();
+}
+
+Color col1 = new Red();
+paint(col1);
+
+Color col2 = new Yellow();
+paint(col2);
+
+Color[] cols = new Color[2];
+cols[0] = new Black();
+cols[1] = new Yellow();
+
+------------------
+
+WebDriver driver = new ChromeDriver();
+WebDriver driver = new SafariDriver();
+WebDriver driver = new FireFoxDriver();
+=================================
+access & execution
+	The reference needs to have access to the field
+	but the execution happens on the object
+
+Benefit of polymorphism
+
+	To limit what you have access to, so you interact with the most important components
+
+	the other references(especially the interface reference), allow us to be more flexible when using objects
+
+	polymorphic data structures: store different object types together if they share an inheritance relationship
+
+	with methods: the parameter and returns can be super references or interface references which allow the methods to be more flexible
+
+Words from a previous student: "Like a woman at the same time is a mother, a wife, an employee. So the same person possesses different behavior in different situations" - Milana B27
+
+instanceOf
+	keyword that can find the type of the object
+
+		real use case example:
+			reading from excel
+			values are given back as Object
+
+			if(cell instanceOf String){
+				// String
+			} else if(cell instanceOf Integer){
+				// parse
+			}
+
+Reference casting
+
+    able to cast/change the reference of the object to a different reference type
+
+    upcasting: from a sub class to a super class
+        automatically/implicitly
+
+    downcasting: from a super class to a sub class
+        manually/explicitly
+----------------------------
+public class Person { liveFree() }
+public class SDET extends Person{ automate() }
+public class SM extends Person { manageTeam() }
+
+Person p = new Person();
+p.liveFree();
+
+SDET sdet = new SDET();
+sdet.liveFree();
+sdet.automate();
+
+//Upcasting:
+Person sdetP = new SDET();
+sdetP.liveFree(); // no Automate
+sdetP.automate(); //ERROR -> automate is not accessible
+Reference type decides what is accessible.
+
+//Downcast:
+
+1) ((SDET)sdetP).automate();
+
+2) SDET sdetP2 = (SDET)sdetP;
+   sdetP2.automate();
+
+Person smP = new SM();
+smP.liveFree();
+smP.manageTeam(); //No access
+//Downcast:
+((SM)smP).manageTeam();
+-----------------------------
+
+   Person
+   |	|
+SM 		SDET
+
+    real use case example:
+	WebDriver driver = new ChromeDriver();
+
+	scenario: fail the test, so we want to take a screenshot
+
+	    driver -> this is the WebDriver interface, but WebDriver interface does not know the screenshot method
+
+	    ((TakesScreenShot)driver).takeScreenShot() --> the reference was cast to the TakesScreenShot interface, which has access to the takeScreenShot method. Now we can execute the method
+
+public interface WebDriver ( get(String Url) )
+
+public interface TakesScreenShot ( takeScreenShot() )
+
+class ChromeDriver implements WebDriver, TakesScreenShot{
+	get(String Url)
+	takeScreenShot()
+	maximize()
+}
+
+WebDriver driver = new ChromeDriver();
+driver.get("etsy.com")
+
+I need to take screenshot: need to downcast
+
+((TakesScreenShot)driver).takeScreenShot();
+((ChromeDriver)driver).takeScreenShot();
+((ChromeDriver)driver).maximize();
+
+====================================
+Static & Dynamic Polymorphism
+
+static polymorphism / static binding / compile time binding
+    example of this: method overloading
+
+dynamic polymorphism / dynamic binding / run time binding
+    example of this: method overriding
+
+    calling a method and executing are different, and they are not linked.
+    You can call a method anywhere
+    execution happens during runtime
+
+Object >A > B > C
+	          > D
+
+new D() -> A,B,D,Object
+new C() -> A,B,C,Object
+new B() -> A,B,Object
+new A() -> A,Object
+
+C c = new B(); Error
+
+A obj = new C();
+(B)obj
+(C)obj
+(D)obj /ClassCastException
+
+Object obj = new B();
+(A)obj -> A obj = new B();
+(B)obj -> B obj = new B();
+
+Object > A(m1) > B(m2) > C(m3)
+(toString)	  		   > D(m4)
+
+D obj = new D(); => m1,m2,m4
+A obj = new D(); => m1
+B obj = new D(); => m1,m2
+
+Object obj = new D(); => none(toString etc)
+obj.toString();
+((B)obj).m2();
+((D)obj).m4();
+
+__________________________________________________________________
+
+Exceptions
+
+https://interviewnoodle.com/exception-in-java-89a0b41e0c45
+
+What is an exception
+
+	stops the normal flow of execution because of some code
+	we will handle these or fix the code that is causing the exception
+
+Exceptions are objects
+
+Inheritance of Exceptions
+	Throwable
+		Error: OutOfMemory(Heap is full), StackOverFlowError(Stack is full)
+		Exception -> checked exceptions
+			RuntimeException -> unchecked exceptions
+
+Types of exceptions:
+
+	checked/compile time
+
+		these exceptions MUST be handled for the program to compile
+
+		Ex: Thread.sleep(), working with files
+
+	unchecked/run time
+
+		an exception that could occur during execution
+		You can handle or fix the code
+
+		Ex: StringIndexOutOfBounds, NullPointerException
+
+How to handle exceptions
+
+	try/catch block
+
+		the try block is for any code we want to run, that could cause an exception
+
+			try {
+
+			}
+
+		the catch block allows us to determine what code should be run if the specified exception is thrown
+
+			(catch Exception e)
+				Note: 'e' is commonly used as the reference name
+
+			Ex: catch(NullPointerException e)
+
+A
+TRY {
+ B
+ C
+} catch(Exception e) {
+ D
+}
+E
+-----------
+1) No issues -> A, B, C, E
+2) B throws exception -> A, D, E
+3) C throws exception -> A, B, D, E
+
+    multiple catch blocks
+
+        it is possible to have multiple catch blocks to handle different kinds of exceptions
+
+        -> Note: you want to make the exceptions as specific as possible to not allow unexpected exceptions to be handled
+
+        rule: order of the catch blocks does matter. The Exceptions should be most specific at the top and become more general towards the end
+
+    finally block:
+
+        its optional to add to try/catch
+
+        this code block will run no matter, regardless if there is an exception or not
+
+Useful exception methods
+
+    printStackTrace():
+    	prints the details about the exception to the console
+
+    getMessage():
+    	returns a String of the message component of the exception
+
+	------------------------------------------------------------------------
+
+IQ: What is the difference between final, finally, finalize()?
+
+	final: variables cannot be changed, class cannot be inherited, and methods cannot be overridden
+
+	finally: block of code used with the try catch. It always runs no matter if there is an exception or not
+
+	finalize(): a method might be called by the garbage collector to help clean the memory
+__________________________________________________________________
+
+Checked exceptions:
+	2 options for code to compile:
+		1. HANDLE using try catch
+		2. DECLARE/IGNORE using throws
+
+main{
+	try{
+		Thread.sleep(1234);
+	}catch(...) {...}
+}
+
+main(String[] args) throws InterruptedException {
+	Thread.sleep(1234);
+}
+===================================
+
+throw new RuntimeException("Something went wrong");
+
+throw keyword -> creates exception object manually and throws.
+
+throws -> is used to declare exception in method signature.
+
+===================================
+throw vs throws
+
+    throws: keyword that allows you to ignore an exception.
+    When we work with checked exceptions, we need to either HANDLE using try catch.
+    or DECLARE/IGNORE using throws.
+
+    public static void main(String[] args) throws Exception {
+        Thread.sleep(1000);
+    }
+
+        this is NOT handling the exception, but it allows you to compile
+
+        	-> if you use throws you are accepting that an exception can happen
+
+        used in the method signature line
+        syntax:
+        	method() throws Exception {}
+        Ex:
+        	public static void main(String[] args) throws InterruptedException{ }
+        	public static void main(String[] args) throws SQLException{ }
+
+    throw: causes an exception to happen, must throw an Exception type object.
+    throw keyword is used to manually throw the exception.
+    	syntax:
+    		throw new RuntimeException();
+
+        Ex:
+
+        if(age < 18){
+        	throw new IllegalArgumentException("Cannot vote before 18");
+        }
+        =======
+
+        /*
+          Custom exception can be created by extending RuntimeException(Unchecked), or Exception(Checked)
+         */
+
+        public class NegativeBalanceException extends RuntimeException {
+            //String arg constructor to be able to add a message to Exception
+            public NegativeBalanceException(String message) {
+                super(message);
+            }
+        }
+========================================
+
+
+Multiple sets of data(numbers, Strings, objects etc):
+
+Efficiently handle the data in your code ->
+    Data Structures: -> Regular arrays
+                     -> Collections framework
+
+DSA question -> Data Structures and Algorithms
+
+Collection framework
+List
+Set
+Thread & Synchronization
+Stack
+Queue
+Iterable
+Map
+_______________________________________________________________
+
+Generics - generic type is used with the class so that we are flexible with data types.
+
+public class MyClass<T> {
+	public T value;
+
+	public static void m1(T param) {
+
+	}
+}
+
+MyClass<String> st = new MyClass<>();
+st.value = "hello";
+st.m1("java");
+
+MyClass<Integer> st = new MyClass<>();
+st.value = 432;
+st.m1(11);
+
+MyClass<Student> st = new MyClass<>();
+st.value = new Student();
+
+MyClass mc = new MyClass();
+mc.value = 33;
+mc.value = "java";
+=====================================
+Data structures:
+	- Arrays
+	- Collections Framework.
+
+DSA questions -> Data structure and Algorithms
+
+Collections Framework
+
+    group of interface and classes which define and implement different algorithms for working with data. These collections are data structures that will store, remove, and get data in different ways
+
+    The collection framework is created with inheritance, abstraction, and polymorphism
+
+Main interface of the framework
+
+    Collection: the parent of the Collection types. Defines the main functions of a collection
+        ex: add, remove, size
+
+    List: ordered(index), allows duplicates
+
+    Set: unordered(no indexes), does not allow duplicates
+
+    Queue: typically FIFO (First In First Out) order
+
+        Deque: an interface that allows access to elements from the beginning or end
+    child of the Queue interface
+
+    ------------------------------------------------------------------------
+
+    Q: What is the difference between Collection and Collections
+
+        Collection: the main/parent interface in the Collection Framework
+
+        Collections: a utility class that has some useful methods for collection types
+            sort, max, frequency
+
+    ------------------------------------------------------------------------
+
+    What is the advantage of the collection framework
+
+        the different data structures have different implementations of algorithms to solve the problems of working with data
+
+            Ex: add()
+                defined in Collection interface
+                abstract
+
+                ArrayList: add element to to the end of internal array
+                LinkedList: create a new node and the tail will have the reference of the new node
+
+        performance:
+            because a certain data structure focuses on one idea it will be able to perform that idea(functionality) efficiently
+
+            adding, removing, searching
+
+        *** Even though there is many collections types, often developers and testers need to only use List or Map types
+
+    ------------------------------------------------------------------------
+
+    What is the benefit of the Polymorphic reference
+
+        references, especially the interface reference allows an object to be flexibly used in methods, constructors, data structures
+
+            new ArrayList<>(Collection c) -> any object that implements the Collection interface can be given as the argument
+
+            public static void m(List<Integer> nums){}
+            public static List<Integer> m(){}
+
+            addAll(Collection c)
+
+    ------------------------------------------------------------------------
+
+    Thread & Synchronization
+
+        process: execution instance of a program
+
+        thread: a sequence of execution within process
+
+        synchronization: multiple threads cannot access at the same time
+            - also known as thread-safe
+            - if multiple threads did try to access something synchronized they would need to access one at a time
+
+        advantage: thread-safe
+        disadvantage: slower
+
+        Ex: multiple people accessing ATM
+
+__________________________________________________________________
+
+Classes that implement List:
+
+    ArrayList: data structure that uses arrays internally. Re-sizeable array
+        useful to storing and reading information
+
+    LinkedList: data structure that uses nodes internally.
+        also implements Deque -> doubly linked
+
+        useful to manipulate the collection. adding or removing is handled efficiently
+
+        Node: an object that has the value, reference to the node before it and reference to node after it
+
+    Vector: legacy version of ArrayList. it is synchronized/Thread safe
+    	if you needed a synchronized collection you can use Collections.synchronizedList()
+    	- based on array internally
+
+    Stack: sub class of Vector. Notes below
+
+    ------------------------------------------------------------------------
+
+========================================
+which one to use LinkedList or Arraylist?
+
+ArrayList is more commonly used.
+
+Reading:
+get(5) -> arraylist -> faster -> Time complexity O(1)
+	   -> linkedList -> slower -> Time complexity O(n):
+	   				Unless first or last then O(1)
+
+Adding:
+add(value) or add(index, value)
+		->arraylist -> O(1) if arrays does not need to be resized. O(n) if needs to be resized(common)
+		->linkedList -> O(1) addFirst, addLast.
+			inserting to middle is O(n)
+
+Remove:
+	remove(Elem):
+		-> arraylist -> O(n) -> needs to remove and resize array
+		-> linkedList -> O(1) -> if first or last elements.
+				O(n) -> all other elements
+
+Big O notation describes time and space complexity
+time complexity how long it takes for code to run based on input
+
+space complexity - how much memory it will take
+
+O(1) -> regardless how much input we have , it takes same exact time
+O(n) -> depending on input, time it takes to complete also grows
+================================
+
+Classes that implement Set:
+
+    HashSet: follows a Hashing algorithm, which means handles data fast and efficiently
+        data structure that uses HashMap internally
+
+        the order is basically random
+
+    LinkedHashSet(): data structure that uses Hash Table and LinkedList implementations. sub class of HashSet
+        the insertion order is maintained
+
+Interface: SortedSet extends Set
+
+    TreeSet: implements the SortedSet
+        Elements are stored in the natural order(sorted order, smallest to largest, lexicographical)
+        null is not allowed
+__________________________________________________________________
+
+Stack vs Queue
+
+Stack
+    sub class of Vector
+
+    LIFO: Last In First Out
+        ex: stack of books/plates
+
+    push(): adding the element to the top of the stack. also returns the element added
+    pop(): removing the element at the top of the stack. also returns that element removed
+    peek(): returns the element at the top of the stack
+
+Queue
+
+    Queue is an interface inheriting the Collection interface
+
+    FIFO: First In First Out
+        ex: a line of people
+
+        add() <--> offer()
+        remove() <--> poll()
+        element() <--> peek()
+
+        The methods on the left can cause an exception to occur whenever the method fails
+        The method on the right just return null
+
+    ------------------------------------------------------------------------
+
+Classes that implement Queue
+
+    PriorityQueue: data structure that stores elements based on natural order
+
+        does not accept null
+
+    Note: Even though Queue is the interface the PriorityQueue has its own implementation of the idea
+
+    ArrayDeque: implementing Deque. FIFO implementation
+        also has access to both side of the collection
+
+        does not accept null
+__________________________________________________________________
+
+Iterable
+
+    interface
+    parent of the Collection interface
+
+    any data structure that implements the Iterable, which is any data structure that implements Collection interface, can be iterated with a for each loop
+
+    The interface defined this abstract method:
+
+        Iterator<T> iterator();
+
+        this abstract method was implemented in the collection classes. The methods returns an iterator object which allows us to iterate through the elements one at a time using the methods of the iterator. It iterates through from beginning to end
+
+        -> think of the iterator as a pin
+        -> when the iterator is set up the starting point is BEFORE the first element
+
+    methods:
+
+        hasNext(): returns boolean. checks if there is any element next to the current position of the iterator(pin)
+
+        next(): returns the element. first moves the iterator to the next element and it returns that element
+
+        remove(): remove the element at the current iterator position
+
+    For Each loop vs Iterator :
+        Iterator allows collection modification while looping.
+        For each loop does not allow to modify during looping
+
+__________________________________________________________________
+
+Map
+
+    interface that does NOT inherit the Collection interface
+
+    Map is still part of the java collection framework
+
+    the main idea of this interface is the key / value format for data
+
+        Entry: key / pair
+
+        each key is linked to some value
+
+        -> keys must be unique
+        -> values can be duplicate
+
+Syntax:
+
+    Map < keyDatatype, valueDatatype > referenceName = object
+
+    Map<Integer, String> map = new HashMap<>();
+
+Classes that implement the Map interface
+
+    HashMap: order the entries is not guaranteed (random order)
+
+        using hashing algorithm (fast and efficient)
+
+    LinkedHashMap: insertion order of the entries is maintained
+
+    TreeMap:
+        implements SortedMap (interface)
+
+        The entries are sorted in a natural order(based on the keys)
+            -> ascending order, smallest to biggest, lexicographical
+
+        null key is not allowed
+
+    HashTable: the order is not guaranteed (random order)
+        legacy class -> inheriting Dictionary
+        synchronized (thread - safe)
+        both null keys and values not allowed
+
+    ------------------------------------------------------------------------
+
+Methods:
+
+    put(key, value):
+        takes the key and value and stores that entry into the map
+
+        -> if the key already exists the value will be updated(reassigned) because the key must be unique
+
+    get(key):
+        returns the value that is linked to the given key
+
+        -> what if the key does not exist? it returns null
+
+    remove(key)
+        uses the key to determine which entry to remove
+
+    containsKey(key)
+        returns boolean based on if the map has that key defined
+
+    containsValue(value)
+        returns boolean based on if the map has the value defined
+
+    ------------------------------------------------------------------------
+
+Looping through a Map:
+
+    can we use for each loop directly with the map
+        no, it does not implement Iterable
+
+        Map<String, Double> map = new HashMap<>();
+
+        for(type : map) <- just this does not work
+
+    keySet(): returns a Set of keys
+
+        then we can iterate through the keys and use those to read the value
+
+        for(String key : map.keySet()){}
+
+    values(): returns all the values of the map
+
+        for(String value : map.values()){}
+
+    entrySet(): returns all the entries of map
+
+        for(Map.Entry<String, Double> entry : map.entrySet()){}
+
+        methods to access information from the entry:
+            getkey()
+            getValue()
+__________________________________________________________________
+
+DB example
+
+        /*
+            Person
+                FIRST_NAME James
+                LAST_NAME Bond
+                AGE 40
+         */
+
+        Map<String, String> person1 = new HashMap<>();
+        person1.put("FIRST_NAME", "James");
+        person1.put("LAST_NAME", "Bond");
+        person1.put("AGE", "40");
+
+       	List<Map<String, String>> allPeople = new ArrayList<>();
+        allPeople.add(person1);
+
+        // I want to know the first name
+        System.out.println(allPeople.get(0).get("FIRST_NAME"));
+
+        /*
+            allPeople -> ArrayList
+            allPeople.get(0) -> First Map object
+            allPeople.get(0).get(FIRST_NAME) -> value of first name
+         */
+
+    Then actual db code:
+
+          List<Map<String,Object>> dataList = new ArrayList<>();
+
+__________________________________________________________________
+
+
+
+
