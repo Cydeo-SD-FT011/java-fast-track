@@ -3,6 +3,10 @@ package day4.topic1_encapsulation.examples;
 public class Records { // normal encapsulation
     private String info;
 
+    public Records(){ //No-args constructor
+
+    }
+
     public String getInfo() {
         return info;
     }

@@ -1,6 +1,6 @@
 package day4.topic1_encapsulation.examples;
 
-public class Person {  // only getter makes it Read-only
+public class Person {  // only getter makes it Read-only/ Immutable class
     private final String birthLocation; // why not make it static? Because each Person has their own location, so it should be unique for each object
 
     public Person(String birthLocation) {
@@ -11,3 +11,10 @@ public class Person {  // only getter makes it Read-only
         return birthLocation;
     }
 }
+/*
+Person p1 = new Person("New York");
+p1.getBirthLocation(); -> "New York"
+There is no setter, so it is immutable.
+
+Person p2 = new Person("California");
+ */

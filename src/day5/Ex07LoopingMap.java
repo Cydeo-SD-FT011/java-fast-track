@@ -33,5 +33,7 @@ public class Ex07LoopingMap {
         }
 
         System.out.println(map.size());
+
+        map.forEach((k, v) -> System.out.println(k + " -->> " + v));
     }
 }

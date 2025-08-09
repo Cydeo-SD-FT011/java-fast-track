@@ -5,6 +5,9 @@ OOP -> Object oriented programming principles
 - Abstraction
 - Polymorphism
 
+OOP is used to write code using objects. Purpose is to make code more organized reusable, maintainable.
+each class has a certain purpose in a project.
+
 Encapsulation - data hiding by making variables private and adding public getter and setter methods.
 =================================
 
@@ -12,6 +15,7 @@ Class -> data/variables
 	  -> behaviour/methods
 
 public class Student {
+
 	private String id; //hidden from outside
 
 	public String getId() {
@@ -31,14 +35,18 @@ public class Student {
 
 Another{
 	Student st = new Student();
-	//st.id = "abc123"; -> ERROR
+	//st.id = "%"; -> ERROR
+
 	st.setId("abc123");
 	println(st.getId());
 }
+-----------
+Spring framework: As SDET, some companies use Spring framework in their java automation framework.
+Mostly they use Spring framework for Dependency Injection (Spring context)
+------------
 
-
-
-
+Immutable class -> Like String class, once we create an object with certain value, object values cannot be changed.
+We can achieve by removing setter methods to private variable.
 
 Inheritance
 Method Overriding
@@ -159,7 +167,9 @@ B b2 = new B(); => "A constructor"
 
 	}
 
-
+In Automation Framework:
+    For UI automation, we can have a parent base page class to store common elements and methods of application.
+    Like header/Footer elements, common actions like logout, search etc
 
 
 Method Overriding
@@ -167,7 +177,8 @@ Method Overriding
 	change the implementation(code) of a method that is inherited from a super class
 		-> another way to phrase it: after inheriting a method we can change how it works
 
-	use of overriding: create method implementation that is more specific for the sub class
+	use of overriding: create method implementation that is more specific for the subclass
+    Method with SAME name and SAME parameters in subclass.
 
 	@Override
 		annotation that helps make sure you override the method correctly
@@ -220,7 +231,8 @@ IQ: What is the difference between method overloading and overriding
 		these concepts allows methods to dynamically be used throughout our projects. Method overloading helps to create multiple methods that share a similar name making it easier to group similar related functionality but also gives the benefit of different ways to call those methods based on the different parameters we define. Method overriding allows us to take an functionality that was inherited and change that implementation to better suit the sub classes. In this case we are not create more methods, but instead we are able to just change how those same methods worked in specific sub classes
 
 IQ: How can you override static methods?
-	static methods cannot be overridden, it is possible to declare a method with the same name in the sub class, but this is called method hiding, not overriding.
+	static methods cannot be overridden, it is possible to declare a method with the same name in the subclass,
+	but this is called method hiding, not overriding.
 
 	------------------------------------------------------------------------
 
@@ -302,36 +314,6 @@ what is actually there:
 		}
 	}
 
-__________________________________________________________________
-
-final
-
-	final variable: a fixed variable. value cannot be reassigned or changed
-
-		Ex: final int a = 5;
-			a = 10; -> this line will not compile because the variable cannot be changed
-
-		- constants: public static final variables
-			information/data that are fixed and accessible everywhere
-
-			Ex: Math.PI
-				Integer.MAX_VALUE
-
-			- convention for creating constant variables: constant variables are created in all uppercase and underscore for spaces
-
-	final method: method that cannot be overridden -> cannot change the implementation of the method
-
-		syntax: public final void method(){}
-
-		Q: can you overload final methods
-			yes
-
-	final class: the class cannot be the parent of another class.
-
-		syntax: public final class name {}
-
-		Q: can a final class be a sub class
-			yes
 __________________________________________________________________
 
 Abstraction
@@ -435,7 +417,7 @@ Q: Can we have any non-abstract methods in interface?
 Q: Can we have any methods with implementation/code block in interface?
 	-> these two questions ask about the same concept
 
-	static and default methods allow creation of methods that have implementation
+	static,private and default methods allow creation of methods that have implementation
 
 	static: a method with code body and it is accessed by the interface name
 		-> these methods are not inherited
@@ -547,6 +529,9 @@ Bus b = new Bus();
 Vehicle b = new Bus();
 Machine b2 = new Bus();
 Object ob = new Car();
+
+List<String> list = new ArrayList<>();
+WebDriver driver = new ChromeDriver();
 
 What are the possible references of an object
 
@@ -805,7 +790,23 @@ Object obj = new D(); => none(toString etc)
 obj.toString();
 ((B)obj).m2();
 ((D)obj).m4();
+__________________________________________________________________
 
+Driver.getDriver("chrome")
+Driver.getDriver("safari")
+
+public class Driver {
+    private static WebDriver driver;
+
+    public static WebDriver getDriver(String browser) {
+        switch(browser) {
+            case "chrome" -> driver = new ChromeDriver();
+            case "safari" -> driver = new SafariDriver();
+        }
+        return driver;
+    }
+
+}
 __________________________________________________________________
 
 Exceptions
@@ -975,7 +976,7 @@ throw vs throws
 Multiple sets of data(numbers, Strings, objects etc):
 
 Efficiently handle the data in your code ->
-    Data Structures: -> Regular arrays
+    Data Structures: -> Regular arrays -> int[] nums
                      -> Collections framework
 
 DSA question -> Data Structures and Algorithms
@@ -1032,15 +1033,15 @@ Main interface of the framework
     Collection: the parent of the Collection types. Defines the main functions of a collection
         ex: add, remove, size
 
-    List: ordered(index), allows duplicates
+    List: ordered (has indexes), allows duplicates
 
     Set: unordered(no indexes), does not allow duplicates
 
     Queue: typically FIFO (First In First Out) order
 
         Deque: an interface that allows access to elements from the beginning or end
-    child of the Queue interface
-
+         child of the Queue interface
+    Map: Key + Value data structure
     ------------------------------------------------------------------------
 
     Q: What is the difference between Collection and Collections
@@ -1369,6 +1370,12 @@ DB example
 
 __________________________________________________________________
 
+Data validation in Automation : in my application, I need to write automation code to do data validation of data displayed on UI, or json API
+resultSet from database.
+
+In order to efficiently organize data, I use java collections. For example, a Map objects....
 
 
-
+For each loop vs Iterator:
+Iterator we can remove values from list while looping
+For each loop does not allow removing while looping it will throw ConcurrentModification exception

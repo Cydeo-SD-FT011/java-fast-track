@@ -49,8 +49,8 @@ public class Scrum {
         CreateSmokeTest tester4 = new Tester("Merve", "SDET", 203_000);
 //        tester4.work();
         tester4.create();
-        ((Tester)(tester4)).writeBugReport();
-        ((Employee)(tester4)).work();
+        ((Tester)tester4).writeBugReport();
+        ((Employee)tester4).work();
 
         // tester4 has access to the create() method
 

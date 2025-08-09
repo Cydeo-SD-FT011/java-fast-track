@@ -7,7 +7,8 @@ public class Ex05Overriding {
         new Soccer().perform();
         System.out.println(new Soccer());
         System.out.println(new Golf());
-
+        Sport.training();
+        Golf.training();
         System.out.println("------------------------------");
         Building.open();
         Shed.open();
@@ -26,6 +27,10 @@ class Sport {
         System.out.println("Performing " + action);
     }
 
+    public static void training() {
+        System.out.println("Doing sports training...");
+    }
+
     @Override
     public String toString() {
         return "Sports " + super.getClass().getSimpleName();
@@ -33,12 +38,17 @@ class Sport {
 }
 
 class Golf extends Sport{
+
+    public static void training() {
+        System.out.println("Doing Golf training...");
+    }
+
     @Override
     void perform() {
         System.out.println("Swinging club");
     }
 }
-class Soccer extends Sport{
+class Soccer extends Sport {
     @Override
     public void perform() {
         System.out.println("Kicking ball");
